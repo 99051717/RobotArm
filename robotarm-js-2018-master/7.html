@@ -1,32 +1,42 @@
 <html>
-    <body>
-        <canvas id="canvas" width="800" height="600"></canvas>
-        <script src="./robot-arm.js"></script>
-        <script>
-            // Robotarm bibliotheek inladen
-            var canvas = document.getElementById("canvas");
-            var robotArm = new RobotArm(canvas);
-            
-            // Het level inladen
-            robotArm.loadLevel("exercise 7");
-            
-            // Jou instructies volgen hier
-            
-            for (i=0; i<8; i++){
-            robotArm.moveRight()  
-                    
-                for (j=0; j<6; j++){
-                    robotArm.grab()
-                    robotArm.moveLeft()
-                    robotArm.drop()
-                    robotArm.moveRight()
+
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script src="./robot-arm.js"></script>
+    <script>
+        // Robotarm bibliotheek inladen
+        var canvas = document.getElementById("canvas");
+        var robotArm = new RobotArm(canvas);
+
+        // Het level inladen
+        robotArm.loadLevel("exercise 7");
+
+        // Jou instructies volgen hier
+        function moveArm(richting, aantal) {
+            for (var i = 0; i < aantal; i++) {
+                if (richting == "left") {
+                    robotArm.moveLeft();
+                } else {
+                    robotArm.moveRight();
                 }
-                robotArm.moveRight()
             }
-            
-            
-            // De door jou opgegeven instructies uitvoeren
-            robotArm.run();
-        </script>
-    </body>
+        }
+        for (i = 0; i <= 5; i++) {
+            moveArm("right", 1)
+
+            for (j = 0; j < 6; j++) {
+                robotArm.grab()
+                moveArm("left", 1)
+                robotArm.drop()
+                moveArm("right", 1)
+            }
+            moveArm("right", 1)
+        }
+
+
+        // De door jou opgegeven instructies uitvoeren
+        robotArm.run();
+    </script>
+</body>
+
 </html>

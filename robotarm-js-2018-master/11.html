@@ -1,22 +1,31 @@
 <html>
-    <body>
-        <canvas id="canvas" width="800" height="600"></canvas>
-        <script src="./robot-arm.js"></script>
-        <script>
-            // Robotarm bibliotheek inladen
-            var canvas = document.getElementById("canvas");
-            var robotArm = new RobotArm(canvas);
-            
-            // Het level inladen
-            robotArm.loadLevel("exercise 11");
-            
-            // Jou instructies volgen hier
-            for (i = 1 ; i <= 10 ; i++)
-                robotArm.moveRight();
 
-        for (j = 1 ; j <= 9 ; j++) {
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script src="./robot-arm.js"></script>
+    <script>
+        // Robotarm bibliotheek inladen
+        var canvas = document.getElementById("canvas");
+        var robotArm = new RobotArm(canvas);
 
-            robotArm.moveLeft();
+        // Het level inladen
+        robotArm.loadLevel("exercise 11");
+
+        // Jou instructies volgen hier
+        function moveArm(richting, aantal) {
+            for (var i = 0; i < aantal; i++) {
+                if (richting == "left") {
+                    robotArm.moveLeft();
+                } else {
+                    robotArm.moveRight();
+                }
+            }
+        }
+        moveArm("right", 10)
+
+        for (j = 1; j <= 9; j++) {
+
+            moveArm("left", 1);
             robotArm.grab();
             robotArm.scan();
 
@@ -24,14 +33,15 @@
                 robotArm.drop();
 
             else {
-                robotArm.moveRight();
+                moveArm("right", 1)
                 robotArm.drop();
-                robotArm.moveLeft();
+                moveArm("left", 1)
 
             }
         }
-            // De door jou opgegeven instructies uitvoeren
-            robotArm.run();
-        </script>
-    </body>
+        // De door jou opgegeven instructies uitvoeren
+        robotArm.run();
+    </script>
+</body>
+
 </html>

@@ -1,45 +1,53 @@
-
 <html>
-    <body>
-        <canvas id="canvas" width="800" height="600"></canvas>
-        <script src="./robot-arm.js"></script>
-        <script>
-            // Robotarm bibliotheek inladen
-            var canvas = document.getElementById("canvas");
-            var robotArm = new RobotArm(canvas);
 
-            // Het level inladen
-            robotArm.randomLevel( 1, 8);
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script src="./robot-arm.js"></script>
+    <script>
+        // Robotarm bibliotheek inladen
+        var canvas = document.getElementById("canvas");
+        var robotArm = new RobotArm(canvas);
 
-            // Jou instructies volgen hier
+        // Het level inladen
+        robotArm.randomLevel(1, 8);
 
-            var AANTAL = 1
-            var Max = 6
-
-            for (j = 1 ; j <= Max ; j++) {
-
-                robotArm.grab();
-                robotArm.scan();
-
-                if (robotArm.scan() != null) {
-
-                    for (i = 1 ; i <= AANTAL ; i++)
-                        robotArm.moveRight();
-                        robotArm.drop();
-
-                    for (i = 1 ; i <= AANTAL ; i++)
-                        robotArm.moveLeft();
-
-                    AANTAL = AANTAL + 1
-                }
-
-                else {
-                    Max = (Max - 6)
+        // Jou instructies volgen hier
+        function moveArm(richting, aantal) {
+            for (var i = 0; i < aantal; i++) {
+                if (richting == "left") {
+                    robotArm.moveLeft();
+                } else {
+                    robotArm.moveRight();
                 }
             }
+        }
 
-            // De door jou opgegeven instructies uitvoeren
-            robotArm.run();
-        </script>
-    </body>
+        var AANTAL = 1
+        var Max = 6
+
+        for (j = 1; j <= Max; j++) {
+
+            robotArm.grab();
+            robotArm.scan();
+
+            if (robotArm.scan() != null) {
+
+                for (i = 1; i <= AANTAL; i++)
+                    moveArm("right", 1);
+                robotArm.drop();
+
+                for (i = 1; i <= AANTAL; i++)
+                    moveArm("left", 1)
+
+                AANTAL = AANTAL + 1
+            } else {
+                Max = (Max - 6)
+            }
+        }
+
+        // De door jou opgegeven instructies uitvoeren
+        robotArm.run();
+    </script>
+</body>
+
 </html>
